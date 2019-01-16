@@ -75,7 +75,13 @@ def nested_process_search(cb_conn, criteria, query_base=None):
     results = set()
 
     try:
+        if 'surveyor_query' in criteria.keys():
+            query_base += ' ' + criteria['surveyor_query'][0]
+
         for search_field,terms in criteria.items():
+            if 'surveyor_query' in search_field:
+                continue
+
             query = '(' + ' OR '.join('%s:%s' % (search_field, term) for term in terms) + ')'
             query += query_base
 
